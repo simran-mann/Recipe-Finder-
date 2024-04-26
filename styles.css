@@ -1,0 +1,97 @@
+/*create a pastel theme */
+
+body {
+    background-color: #f9f9f9; 
+}
+
+
+header {
+    background-color: #d5c2e2;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: #333; 
+}
+
+
+main {
+    padding: 20px;
+}
+
+
+#ingredientInput {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#searchButton {
+    padding: 10px 20px;
+    background-color: #f7cac9; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333; 
+}
+
+#searchButton:hover {
+    background-color: #f5a9a9; 
+}
+
+
+#recipeList {
+    list-style: none;
+    padding: 0;
+}
+
+#recipeList li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+footer {
+    background-color: #d5c2e2; 
+    padding: 20px;
+    text-align: center;
+    color: #333; 
+}
+
+
+#recipeDetails {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f7cac9; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#recipeDetails h2 {
+    color: #333; 
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+#recipeDetails ul {
+    list-style-type: none; 
+    padding: 0;
+}
+
+
+#recipeDetails ul li {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+
+#recipeDetails p {
+    color: #333; 
+    font-size: 18px;
+    line-height: 1.6; 
+}
