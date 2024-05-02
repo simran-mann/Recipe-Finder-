@@ -8,7 +8,10 @@ const recipeDetails = document.getElementById('recipeDetails');
 let displayedRecipeId;
 
 
+//event listener for search by name button 
+
 searchByNameBtn.addEventListener('click', () => {
+  //executes when the button is clicked 
     clearRecipeResults();
     const query = prompt('Enter a recipe name:');
     if (query) {
@@ -16,54 +19,61 @@ searchByNameBtn.addEventListener('click', () => {
     }
 });
 
+//event listener for browse random recipes button 
 browseRandomBtn.addEventListener('click', () => {
     clearRecipeResults();
     getRandomRecipes();
 });
 
+//clears the results of all recipes being displayed 
 function clearRecipeResults() {
     recipeResults.innerHTML = '';
     recipeDetails.innerHTML = '';
 }
 
+
+
+function getRecipes(url, numberOfRecipes) {
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network error');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.meals) {
+        return data.meals.slice(0, numberOfRecipes);
+      } else {
+        throw new Error('No recipes found');
+      }
+    });
+}
+
+
+function fetchRecipes(url, numberOfRecipes = 1) {
+  const promises = Array.from({ length: numberOfRecipes }, () => getRecipes(url, 1));
+  return Promise.all(promises)
+    .then(results => results.flat())
+    .catch(error => {
+      console.error('Error fetching recipes:', error);
+      return [];
+    });
+}
+
 function searchRecipesByName(name) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network error');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.meals) {
-                displayRecipes(data.meals);
-            } else {
-                recipeResults.textContent = 'No recipes found';
-            }
-        })
-        .catch(error => {
-            console.error('Error with the fetch operation:', error);
-        });
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
+  fetchRecipes(url)
+    .then(meals => displayRecipes(meals))
+    .catch(error => console.error('Error searching recipes by name:', error));
 }
 
 function getRandomRecipes() {
-    fetch('https://www.themealdb.com/api/json/v1/1/random.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network error');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.meals) {
-                displayRecipes(data.meals);
-            } else {
-                recipeResults.textContent = 'No random recipes found';
-            }
-        })
-        .catch(error => {
-            console.error('Error with the fetch operation:', error);
-        });
+  const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  const numberOfRecipes = 5;
+  fetchRecipes(url, numberOfRecipes)
+    .then(meals => displayRecipes(meals))
+    .catch(error => console.error('Error fetching random recipes:', error));
 }
 
 searchByIngredientsBtn.addEventListener('click', () => {
